@@ -110,7 +110,7 @@ class _CPUListState extends State<CPUList> {
 
             Navigator.pushNamed(
               context,
-              "/console_detail",
+              "/cpu_detail",
               arguments: console,
             );
 

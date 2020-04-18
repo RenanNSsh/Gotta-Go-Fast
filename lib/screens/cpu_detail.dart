@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gotta_go_fast/models/console_model.dart';
 import 'package:gotta_go_fast/models/cpu_model.dart';
 
@@ -18,7 +19,7 @@ class CPUDetailScreen extends StatelessWidget {
       ),
       child: Center(
         child: new Text(
-          consoleModel.name,
+          consoleModel.developer,
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -28,13 +29,28 @@ class CPUDetailScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         SizedBox(height: 80.0),
-        Icon(
-          Icons.computer,
-          color: Colors.white,
-          size: 40.0,
+        Row(
+          children: <Widget>[
+        SizedBox(width: 30.0),
+             SvgPicture.network(
+            consoleModel.iconUrl,
+            placeholderBuilder: (context) => CircularProgressIndicator(),
+            height: 50,
+            
+          ),
+          
+        SizedBox(width: 50.0),
+        Text(
+          consoleModel.name,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 22.0,
+          ),
         ),
+          ],
+        ),
+       
         Container(
-          width: 90.0,
           child: new Divider(color: Colors.green),
         ),
         SizedBox(height: 10.0),
@@ -42,7 +58,7 @@ class CPUDetailScreen extends StatelessWidget {
           model.name,
           style: TextStyle(
             color: Colors.white,
-            fontSize: 45.0,
+            fontSize: 30.0,
           ),
         ),
         SizedBox(height: 22.7),
@@ -64,7 +80,7 @@ class CPUDetailScreen extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.5,
           decoration: new BoxDecoration(
             image: new DecorationImage(
-              image: new AssetImage("drive.jpg"),
+              image: NetworkImage("https://s2.glbimg.com/gQ90wGlaGxRYProvuUNdnbJlPBI=/0x0:695x391/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2017/K/g/f3EkjfR5WVFdsGQu0vXQ/crash6.jpg"),
               fit: BoxFit.cover,
             ),
           ),
@@ -95,9 +111,8 @@ class CPUDetailScreen extends StatelessWidget {
     );
 
     final bottomContentText = Text(
-      model.description,
+      model.description ?? "",
       style: TextStyle(fontSize: 18.0),
-      textAlign: TextAlign.justify,
     );
 
     final readButton = Container(
@@ -107,7 +122,7 @@ class CPUDetailScreen extends StatelessWidget {
         onPressed: () => {},
         color: Color.fromRGBO(58, 66, 86, 1.0),
         child: Text(
-          "Tenho interesse!",
+          "Saiba mais!",
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -120,18 +135,20 @@ class CPUDetailScreen extends StatelessWidget {
         child: Column(
           children: <Widget>[
             bottomContentText,
-            readButton,
+            // readButton,
           ],
         ),
       ),
     );
 
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          topContent,
-          bottomContent,
-        ],
+      body: SingleChildScrollView(
+              child: Column(
+          children: <Widget>[
+            topContent,
+            bottomContent,
+          ],
+        ),
       ),
     );
   }
