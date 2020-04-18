@@ -11,7 +11,7 @@ class CPUDetailScreen extends StatelessWidget {
     ConsoleModel consoleModel = ModalRoute.of(context).settings.arguments;
     model = consoleModel.cpu;
 
-    final coursePrice = Container(
+    final developerName = Container(
       padding: const EdgeInsets.all(7.0),
       decoration: new BoxDecoration(
         border: new Border.all(color: Colors.white),
@@ -66,7 +66,7 @@ class CPUDetailScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Expanded(
-              child: coursePrice,
+              child: developerName,
             ),
           ],
         ),
@@ -115,7 +115,7 @@ class CPUDetailScreen extends StatelessWidget {
       style: TextStyle(fontSize: 18.0),
     );
 
-    final readButton = Container(
+    final knowMoreButton = Container(
       padding: EdgeInsets.symmetric(vertical: 16.0),
       width: MediaQuery.of(context).size.width,
       child: RaisedButton(
@@ -135,7 +135,7 @@ class CPUDetailScreen extends StatelessWidget {
         child: Column(
           children: <Widget>[
             bottomContentText,
-            // readButton,
+            // knowMoreButton,
           ],
         ),
       ),
