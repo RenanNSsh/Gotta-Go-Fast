@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class CPUModel{
   String name;
   String description;
@@ -7,7 +9,7 @@ class CPUModel{
   int flops;
 
   CPUModel({
-   this.name,
+   @required this.name,
    this.description,
    this.frequency,
    this.coreAmout,
