@@ -22,7 +22,7 @@ var _consoles = [
           name: "MIPS R5900 Emotion Engine",
           description: "O Emotion Engine é uma unidade de processamento central desenvolvido e fabricado pela Sony Computer Entertainment e Toshiba para uso no PlayStation 2 console de videogame . Ele também foi usado nos primeiros PlayStation 3 modelos vendidos no Japão e América do Norte (modelo Números CECHAxx & CECHBxx), para fornecer suporte game PlayStation 2. A produção em massa do Emotion Engine começou em 1999 e terminou no final de 2012 com a descontinuação do PlayStation 2."
         ),
-        games: ["https://i.pinimg.com/originals/2f/e0/18/2fe01825d5cd95e63cf1d06388ad99b8.jpg"],
+        games: ["https://i.pinimg.com/originals/2f/e0/18/2fe01825d5cd95e63cf1d06388ad99b8.jpg","https://timeline.canaltech.com.br/271064.1400/analise-shadow-of-the-colossus-ja-era-incrivel-agora-se-tornou-indescritivel.jpg"],
         developer: _sony,
         name: "Playstation 2",
         iconUrl: "https://image.flaticon.com/icons/svg/588/588258.svg"
@@ -41,6 +41,7 @@ var _consoles = [
           name: "Ricoh 5A22",
           description: "O Ricoh 5A22 é um microprocessador produzido pela Ricoh para o console de jogos eletrônicos Super Nintendo Entertainment System (SNES). O 5A22 é baseado em torno do CMD/GTE 65c816 16-bit, por si só uma versão do WDC 65C816 (usado no computador pessoal Apple IIGS)."
         ),
+        games: ["https://i1.wp.com/www.memoriabit.com.br/wp-content/uploads/2019/07/super-mario-world-banner.png?fit=741%2C483&ssl=","https://http2.mlstatic.com/cartucho-aladdin-jogo-snes-super-nintendo-capcom-aladin-D_NQ_NP_772549-MLB26951789330_032018-F.jpg","https://f.i.uol.com.br/fotografia/2018/03/23/15218292595ab5458b66fe1_1521829259_3x2_md.jpg"],
         developer: _nintendo,
         name: "Super Nintendo",
         iconUrl: "https://image.flaticon.com/icons/svg/141/141070.svg"
@@ -51,6 +52,7 @@ var _consoles = [
           description: "O Game Boy é alimentado por um microprocessador bastante simples, o que o torna um alvo ideal para aprender sobre arquitetura de computadores através da emulação. A CPU é na verdade um híbrido entre o Intel 8080 e o Zilog Z80. O Z80 foi projetado para ser binário compatível com o Intel 8080 já existente. Isso significa que o conjunto de instruções encontrado no 8080 também foi implementado pelo Z80 (em essência, o 8080 pode ser visto como um subconjunto do Z80). O nome oficial do chip híbrido personalizado do Game Boy é Sharp LR35902."
           ),
         developer: _nintendo,
+        games: ["https://michibiku.com/wp-content/uploads/2019/03/lozoracle.jpg","https://4.bp.blogspot.com/-Z7p56iQOwmo/VY3YXBM0qAI/AAAAAAAAELo/yd7PEJpV-LI/s1600/01.jpg"],
         name: "Gameboy Color",
         iconUrl: "https://image.flaticon.com/icons/svg/2094/2094405.svg"
       ),

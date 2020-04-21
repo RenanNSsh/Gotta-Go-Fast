@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gotta_go_fast/models/console_model.dart';
@@ -88,19 +89,31 @@ class CPUDetailScreen extends StatelessWidget {
 
     final topContent = Stack(
       children: <Widget>[
-        Container(
-          padding: EdgeInsets.only(left: 10.0),
-          height: MediaQuery.of(context).size.height * 0.5,
-          decoration: new BoxDecoration(
-            image: new DecorationImage(
-              image: NetworkImage(consoleModel.games.isEmpty ? "" : consoleModel.games.first),
-              fit: BoxFit.cover,
-              onError: (exception, stackTrace) {
-                print(exception);
+          CarouselSlider.builder(
+
+              itemCount: consoleModel.games.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  
+                  padding: EdgeInsets.only(left: 10.0),
+                  decoration: new BoxDecoration(
+                    image: new DecorationImage(
+                      image: NetworkImage(consoleModel.games.isEmpty ? "" : consoleModel.games[index]),
+                      fit: BoxFit.cover,
+                      onError: (exception, stackTrace) {
+                        print(exception);
+                      },
+                    ),
+                  ),
+                            
+                );
               },
+              options: CarouselOptions( 
+                autoPlay: consoleModel.games.length > 1,
+                viewportFraction: 1.0,
+                height: MediaQuery.of(context).size.height * 0.5,
+                enlargeCenterPage: true,),
             ),
-          ),
-        ),
         Container(
           height: MediaQuery.of(context).size.height * 0.5,
           padding: EdgeInsets.all(40.0),
