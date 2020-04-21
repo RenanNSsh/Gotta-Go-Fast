@@ -10,21 +10,38 @@ class CardConsole extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      elevation: 12.0,
+    return Container(
+      
       margin: new EdgeInsets.symmetric(
+        vertical:8.0,
         horizontal: 12.0,
-        vertical: 6.0,
       ),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Color.fromRGBO(64, 75, 96, .9),
+      decoration: BoxDecoration(
+        color: const Color(0XFF181818),
+        borderRadius: BorderRadius.circular(10.0),
+        boxShadow: [BoxShadow(offset: Offset.fromDirection(2))]
+      ),
+      child: MaterialButton(
+        onPressed: () {
+          Navigator.pushNamed(
+            context,
+            "/cpu_detail",
+            arguments: console,
+          );
+        },
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
         ),
-        child: ListTile(
+        elevation: 12.0,
+        child: _buildListTile(),
+      ),
+      
+    );
+  }
+
+  ListTile _buildListTile() {
+    return ListTile(
           contentPadding: EdgeInsets.symmetric(
             horizontal: 20.0,
             vertical: 10.0,
@@ -68,17 +85,6 @@ class CardConsole extends StatelessWidget {
             color: Colors.white,
             size: 30.0,
           ),
-          onTap: () {
-
-            Navigator.pushNamed(
-              context,
-              "/cpu_detail",
-              arguments: console,
-            );
-
-          },
-        ),
-      ),
-    );
+        );
   }
 }

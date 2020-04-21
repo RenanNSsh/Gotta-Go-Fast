@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gotta_go_fast/models/console_model.dart';
@@ -19,49 +20,61 @@ class CPUDetailScreen extends StatelessWidget {
       ),
       child: Center(
         child: new Text(
-          consoleModel.developer,
-          style: TextStyle(color: Colors.white),
+          consoleModel.developer.name,
+          style: TextStyle(color: Colors.white,fontSize:  MediaQuery.of(context).size.width /100 * 3.8),
+          
         ),
       ),
     );
 
     final topContentText = Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        SizedBox(height: 80.0),
+        SizedBox(height: 30.0),
+        
         Row(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-        SizedBox(width: 30.0),
-             SvgPicture.network(
-            consoleModel.iconUrl,
-            placeholderBuilder: (context) => CircularProgressIndicator(),
-            height: 50,
-            
-          ),
-          
-        SizedBox(width: 50.0),
-        Text(
-          consoleModel.name,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 22.0,
-          ),
-        ),
+            SizedBox(width: 30.0),
+              Flexible(
+                flex: 1,
+                                child: SvgPicture.network(
+                consoleModel.iconUrl,
+                placeholderBuilder: (context) => CircularProgressIndicator(),
+                height: 50,
+                
+              ),
+            ),
+              
+            SizedBox(width: MediaQuery.of(context).size.width /100 * 5),
+            Flexible(
+              flex: 4,
+                          child: AutoSizeText(
+                consoleModel.name,
+                maxLines: 2,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize:  MediaQuery.of(context).size.width *7 / 100,
+                ),
+              ),
+            ),
           ],
         ),
        
         Container(
           child: new Divider(color: Colors.green),
         ),
-        SizedBox(height: 10.0),
-        Text(
+        SizedBox(height: MediaQuery.of(context).size.width /100 ),
+        AutoSizeText(
           model.name,
+          maxLines: 1,
           style: TextStyle(
             color: Colors.white,
-            fontSize: 30.0,
+            fontSize: MediaQuery.of(context).size.width /100 * 9,
           ),
         ),
-        SizedBox(height: 22.7),
+        SizedBox(height: MediaQuery.of(context).size.width /100 *2.7),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -80,8 +93,11 @@ class CPUDetailScreen extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.5,
           decoration: new BoxDecoration(
             image: new DecorationImage(
-              image: NetworkImage("https://s2.glbimg.com/gQ90wGlaGxRYProvuUNdnbJlPBI=/0x0:695x391/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2017/K/g/f3EkjfR5WVFdsGQu0vXQ/crash6.jpg"),
+              image: NetworkImage(consoleModel.games.isEmpty ? "" : consoleModel.games.first),
               fit: BoxFit.cover,
+              onError: (exception, stackTrace) {
+                print(exception);
+              },
             ),
           ),
         ),
