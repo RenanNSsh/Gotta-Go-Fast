@@ -10,7 +10,7 @@ class ConsoleModel{
   List<String> games;
   CPUModel cpu;
   bool isliked;
-  String gameImg;
+  List<String> imagesGamesDevice;
 
   ConsoleModel({
    @required this.name,
@@ -19,7 +19,7 @@ class ConsoleModel{
    this.games = const [],
    this.isliked = false,
    this.iconUrl, 
-   this.gameImg
+   this.imagesGamesDevice = const [],
   }){
     this.name = this.name.titleCap;
     

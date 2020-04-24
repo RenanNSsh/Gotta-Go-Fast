@@ -13,7 +13,7 @@ class CreateConsole extends StatefulWidget {
   final Function(bool valid) onValidStateChange;
   final String icon;
   final Function(String icon) onIconChange;
-  final Function(String imagePath) onImageChange;
+  final Function(List<String> imagesPath) onImageChange;
   final TextEditingController consoleNameController;
 
   CreateConsole({
@@ -31,7 +31,7 @@ class CreateConsole extends StatefulWidget {
 
 class _CreateConsoleState extends State<CreateConsole> with SingleTickerProviderStateMixin{
   String iconConsole;
-  String imageUrl;
+  List<String> images = [];
 
   AnimationController animationConsoleController;
   ConsoleService service = ConsoleService();
@@ -218,10 +218,10 @@ class _CreateConsoleState extends State<CreateConsole> with SingleTickerProvider
                    ImagePicker.pickImage(source: ImageSource.gallery).then((file){
                     if(file == null) return;
                     setState(() {
-                      imageUrl = file.path;
+                      images.add(file.path);
                     });
                     if(widget.onImageChange != null){
-                      widget.onImageChange(imageUrl);
+                      widget.onImageChange(images);
                     }
                   });
                 },
@@ -235,43 +235,13 @@ class _CreateConsoleState extends State<CreateConsole> with SingleTickerProvider
                   height: 40,
                 ),
               ),
-                imageUrl != null ?Padding(
-                  padding: const EdgeInsets.only(left:15.0),
-                  child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      imageUrl = null;
-                    });
-                  },
-                  child: SvgPicture.network(
-                    "https://image.flaticon.com/icons/svg/747/747539.svg",
-                    placeholderBuilder: (context) => Container(
-                      child: CircularProgressIndicator(),
-                      width: 30,
-                      height: 30,
-                    ),
-                    height: 30,
-                  ),
-              ),
-                ): Container(),
             ],
           ),
         ),
-          imageUrl != null ?  Row(
-            children: <Widget>[
-              Container(
-                  height: 150.0,
-                  width: 150.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: FileImage(File(imageUrl))
-                    )
-                  ),
-        ),
-            ],
-          ): Container(),
+        images.length > 0 ?  
+        Wrap(
+          children: images.map((image) => _buildImageGame(image)).toList()
+        ): Container(),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 15.0),
             child: Text("*Pressione nos icones para alterar",
@@ -281,6 +251,80 @@ class _CreateConsoleState extends State<CreateConsole> with SingleTickerProvider
           ),
          
       ],
+    );
+  }
+
+  Widget _buildImageGame(String image) {
+    return Padding(
+      padding: const EdgeInsets.only(top:8.0),
+      child: Wrap(
+                children: <Widget>[
+                  Container(
+                      height: 100.0,
+                      width: 100.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: FileImage(File(image))
+                        )
+                      ),
+                  ),
+            
+                  Container(
+                    height: 100.0 ,
+                    padding: EdgeInsets.all(10.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+
+                        Padding(
+                              padding: const EdgeInsets.only(bottom:15.0),
+                              child: InkWell(
+                              onTap: () {
+                                ImagePicker.pickImage(source: ImageSource.gallery).then((file){
+                                  if(file == null) return;
+                                  setState(() {
+                                    images[images.indexOf(image)] = file.path;
+                                  });
+                                  if(widget.onImageChange != null){
+                                    widget.onImageChange(images);
+                                  }
+                                });
+                              },
+                              child: SvgPicture.network(
+                                "https://image.flaticon.com/icons/svg/475/475626.svg",
+                                placeholderBuilder: (context) => Container(
+                                  child: CircularProgressIndicator(),
+                                  width: 25,
+                                  height: 25,
+                                ),
+                                height: 25,
+                              ),
+                          ),
+                            ),
+                        InkWell(
+                        onTap: () {
+                          setState(() {
+                            images.remove(image);
+                            widget.onImageChange(images);
+                          });
+                        },
+                        child: SvgPicture.network(
+                          "https://image.flaticon.com/icons/svg/747/747539.svg",
+                          placeholderBuilder: (context) => Container(
+                            child: CircularProgressIndicator(),
+                            width: 25,
+                            height: 25,
+                          ),
+                          height: 25,
+                        ),
+                          )
+                      ],
+                    ),
+                  )
+                ],
+              ),
     );
   }
 }

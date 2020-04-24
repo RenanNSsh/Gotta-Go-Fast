@@ -132,25 +132,24 @@ class _CPUDetailScreenState extends State<CPUDetailScreen> {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
-    return Stack(
-      children: <Widget>[
+  Widget _buildCarouselLoaded(){
+    return 
         CarouselSlider.builder(
           itemCount: widget.consoleModel.games.length,
           itemBuilder: (context, index) {
-            var model = widget.consoleModel;
+            var consoleModel = widget.consoleModel;
             return Container(
               padding: EdgeInsets.only(left: 10.0),
-              decoration: new BoxDecoration(
-                image: new DecorationImage(
-                  image: model.gameImg == null ? NetworkImage(model.games.isEmpty
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(consoleModel.games.isEmpty
                       ? ""
-                      : model.games[index]) : FileImage(File(model.gameImg)),
+                      : consoleModel.games[index]),
                   fit: BoxFit.cover,
                   onError: (exception, stackTrace) {
                     print(exception);
                   },
-                ),
+                )
               ),
             );
           },
@@ -160,7 +159,43 @@ class _CPUDetailScreenState extends State<CPUDetailScreen> {
             height: MediaQuery.of(context).size.height * 0.5,
             enlargeCenterPage: true,
           ),
-        ),
+        );
+  }
+
+  Widget _buildCarouselNewItem(){
+    return 
+        CarouselSlider.builder(
+          itemCount: widget.consoleModel.imagesGamesDevice.length,
+          itemBuilder: (context, index) {
+            var consoleModel = widget.consoleModel;
+            return Container(
+              padding: EdgeInsets.only(left: 10.0),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: FileImage(File(consoleModel.imagesGamesDevice[index])),
+                  fit: BoxFit.cover,
+                  onError: (exception, stackTrace) {
+                    print(exception);
+                  },
+                )
+              ),
+            );
+          },
+          options: CarouselOptions(
+            autoPlay: widget.consoleModel.imagesGamesDevice.length > 1,
+            viewportFraction: 1.0,
+            height: MediaQuery.of(context).size.height * 0.5,
+            enlargeCenterPage: true,
+          ),
+        );
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        widget.consoleModel.games.length > 0 ? 
+          _buildCarouselLoaded() 
+        : _buildCarouselNewItem(),
         Container(
           height: MediaQuery.of(context).size.height * 0.5,
           padding: EdgeInsets.all(40.0),
