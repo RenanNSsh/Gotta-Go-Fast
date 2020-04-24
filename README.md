@@ -14,9 +14,8 @@ Um Projeto Flutter de Processadores de Vídeo Games!
 
   - Favoritar os processadores que achar interessante.
 ![image](https://user-images.githubusercontent.com/42506011/80232875-fdeb6680-862b-11ea-8600-38553a167dae.png)
-
-  - Utilizar o dark mode.
-![image](https://user-images.githubusercontent.com/42506011/80233019-368b4000-862c-11ea-80a5-d9b69f38ecdb.png)
+  - Utilizar o dark mode.                                                     
+  ![image](https://user-images.githubusercontent.com/42506011/80233019-368b4000-862c-11ea-80a5-d9b69f38ecdb.png)
 
 ## Versões Futuras
 
