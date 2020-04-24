@@ -43,6 +43,13 @@ class ConsoleService{
     return _repository.findConsoleLikedByDeveloper(developer.name.toLowerCase());
   }
 
+  Future<List<ConsoleModel>> filterLikedsByText(String text) {
+    if(text != null && text.isEmpty){
+      return findLikeds();
+    }
+    return _repository.findLikedsWith(text.toLowerCase());
+  }
+
   Future<void> save(ConsoleModel consoleModel) async{
     await _repository.save(consoleModel);
   }
@@ -55,6 +62,7 @@ class ConsoleService{
   Future<List<String>> findAllDeveloperIcons() async {
     return await _repository.findAllDeveloperIcons();
   }
+
 
 
 }

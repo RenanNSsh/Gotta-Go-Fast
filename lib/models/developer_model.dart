@@ -7,8 +7,7 @@ class DeveloperModel{
     this.iconUrl,
     this.name
   }){
-    if(this.name.toLowerCase() == this.name){
-      this.name = this.name.firstLetterToUpperCase;
-    }
+    this.name = this.name.titleCap;
+    
   }
 }

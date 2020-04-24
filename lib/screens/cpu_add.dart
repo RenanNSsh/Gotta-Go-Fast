@@ -1,9 +1,12 @@
 // flutter
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 // project
 import 'package:gotta_go_fast/components/custom_scaffold.dart';
 import 'package:gotta_go_fast/components/gradient_container.dart';
+import 'package:gotta_go_fast/components/title_text.dart';
 import 'package:gotta_go_fast/forms/create_console.dart';
 import 'package:gotta_go_fast/forms/create_cpu.dart';
 import 'package:gotta_go_fast/forms/create_developer.dart';
@@ -12,6 +15,8 @@ import 'package:gotta_go_fast/models/cpu_model.dart';
 import 'package:gotta_go_fast/models/developer_model.dart';
 import 'package:gotta_go_fast/services/console_service.dart';
 import 'package:gotta_go_fast/extensions/string_extension.dart';
+import 'package:gotta_go_fast/themes/app_themes.dart';
+import 'package:provider/provider.dart';
 
 class CPUAddScreen extends StatefulWidget {
   CPUAddScreen({Key key}) : super(key: key);
@@ -32,6 +37,7 @@ class _CPUAddScreenState extends State<CPUAddScreen> {
   // First Step
   TextEditingController consoleNameController = TextEditingController();
   String iconConsole;
+  String imageGameUrl;
 
   // Second Step
   TextEditingController developerNameController = TextEditingController();
@@ -72,16 +78,17 @@ class _CPUAddScreenState extends State<CPUAddScreen> {
           steps: [
             _createStep(
               _stepValue++,
-              title: 'Console',
+              icon: 'https://image.flaticon.com/icons/svg/808/808513.svg',
               content: CreateConsole(
                 icon: iconConsole,
                 consoleNameController: consoleNameController,
                 onIconChange: (String icon) => iconConsole = icon,
+                onImageChange: (String imageUrl) => imageGameUrl = imageUrl,
                 onValidStateChange: validStateChange
               )
             ),
             _createStep(_stepValue++,
-              title: 'Desenvolvedora',
+              icon: 'https://image.flaticon.com/icons/svg/1875/1875574.svg',
               content: CreateDeveloper(
                 icon: developerIcon,
                 onValidStateChange: validStateChange,
@@ -90,7 +97,7 @@ class _CPUAddScreenState extends State<CPUAddScreen> {
               )
             ),
             _createStep(_stepValue++,
-              title: 'Processador',
+              icon: 'https://image.flaticon.com/icons/svg/1800/1800448.svg',
               isActive: currentStep == _stepValue,
               content: CreateCPU(
                 onValidStateChange: validStateChange,
@@ -106,6 +113,50 @@ class _CPUAddScreenState extends State<CPUAddScreen> {
           ],
           currentStep: currentStep,
           onStepCancel: cancel,
+          controlsBuilder: (context, {onStepCancel, onStepContinue}) {
+            return Row(
+              children: [
+                currentStep > 0 ?
+                  FlatButton(
+                    child: Text('Voltar'),
+                    onPressed:  cancel,
+                  ) : Container(),
+                currentStep < stepsLength -1 ?
+                FlatButton(
+                  child: Text('Próximo'),
+                  onPressed: isValidStep || currentStep < _currentCompleteStep ? next : null,
+                ): isValidStep ? Stack(children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 8.0),
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      child: RaisedButton(
+                        shape: RoundedRectangleBorder(side: BorderSide(color:  Theme.of(context).accentColor)),
+                        onPressed:  next,
+                        color: Provider.of<AppThemes>(context).buttonCreateCPU,
+
+                        child: TitleText(
+                          text: "Criar!",
+                          color: Theme.of(context).accentColor,
+                        ),
+                      )),
+                  Positioned(
+                    child: SvgPicture.network(
+                      "https://image.flaticon.com/icons/svg/2654/2654598.svg",
+                      placeholderBuilder: (context) => Container(
+                        child: CircularProgressIndicator(),
+                        width: 30,
+                        height: 30,
+                      ),
+                      height: 50,
+                    ),
+                    top: 5,
+                    left: 23,
+                  ),
+                  SizedBox(height: 60,)
+                ]) : Container(),
+              ],
+            );
+          },
           onStepContinue:
               isValidStep || currentStep < _currentCompleteStep ? next : null,
           onStepTapped: changeStep,
@@ -115,11 +166,16 @@ class _CPUAddScreenState extends State<CPUAddScreen> {
   }
 
   Step _createStep(int stepValue,
-      {@required String title,
+      {@required String icon,
       @required Widget content,
       bool isActive = false}) {
     return Step(
-        title: Text(title),
+        title: SvgPicture.network(
+          icon,
+          placeholderBuilder: (context) => Container(child:CircularProgressIndicator(), width: 30, height: 30,),
+          height: 40,
+          color:  Provider.of<AppThemes>(context).appBarTitleColor
+        ),
         isActive: currentStep == stepValue,
         state: getState(stepValue),
         content: content);
@@ -208,6 +264,7 @@ class _CPUAddScreenState extends State<CPUAddScreen> {
       cpu: cpuModel,
       developer: developer,
       name: consoleNameController.text,
+      gameImg: imageGameUrl,
       iconUrl: iconConsole,
     );
   }

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gotta_go_fast/themes/app_themes.dart';
+import 'package:gotta_go_fast/themes/theme_type.dart';
+import 'package:provider/provider.dart';
 import 'package:gotta_go_fast/screens/cpu_add.dart';
 import 'package:gotta_go_fast/screens/cpu_detail.dart';
 import 'package:gotta_go_fast/screens/cpu_list.dart';
@@ -12,12 +15,23 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    return ChangeNotifierProvider<AppThemes>(
+      builder: (_) => AppThemes(type: ThemeType.DARK),
+      child:  MaterialAppWithTheme(),
+    );
+   
+  }
+
+}
+
+class MaterialAppWithTheme extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    final theme = Provider.of<AppThemes>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Gotta Go Fast',
-      theme: ThemeData(
-        primaryColor: Color.fromRGBO(58, 66, 86, 1.0),
-      ),
+      theme: theme.getTheme(),
       onGenerateRoute: (RouteSettings settings){
         var routes = <String, WidgetBuilder>{
           '/': (BuildContext context) => CPUList(settings.arguments),
@@ -31,4 +45,5 @@ class MyApp extends StatelessWidget {
       initialRoute: '/'
     );
   }
+
 }

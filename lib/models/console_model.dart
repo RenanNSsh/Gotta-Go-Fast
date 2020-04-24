@@ -10,6 +10,7 @@ class ConsoleModel{
   List<String> games;
   CPUModel cpu;
   bool isliked;
+  String gameImg;
 
   ConsoleModel({
    @required this.name,
@@ -17,10 +18,10 @@ class ConsoleModel{
    @required this.cpu,
    this.games = const [],
    this.isliked = false,
-   this.iconUrl
+   this.iconUrl, 
+   this.gameImg
   }){
-    if(this.name.toLowerCase() == this.name){
-      this.name = this.name.firstLetterToUpperCase;
-    }
+    this.name = this.name.titleCap;
+    
   }
 }

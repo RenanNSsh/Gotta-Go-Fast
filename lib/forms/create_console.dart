@@ -1,13 +1,19 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gotta_go_fast/components/title_text.dart';
 import 'package:gotta_go_fast/services/console_service.dart';
+import 'package:gotta_go_fast/themes/app_themes.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class CreateConsole extends StatefulWidget {
 
   final Function(bool valid) onValidStateChange;
   final String icon;
   final Function(String icon) onIconChange;
+  final Function(String imagePath) onImageChange;
   final TextEditingController consoleNameController;
 
   CreateConsole({
@@ -15,7 +21,8 @@ class CreateConsole extends StatefulWidget {
     @required this.onValidStateChange, 
     @required this.consoleNameController, 
     @required this.onIconChange, 
-    this.icon
+    this.onImageChange,
+    this.icon, 
   }) : super(key: key);
 
   @override
@@ -24,6 +31,7 @@ class CreateConsole extends StatefulWidget {
 
 class _CreateConsoleState extends State<CreateConsole> with SingleTickerProviderStateMixin{
   String iconConsole;
+  String imageUrl;
 
   AnimationController animationConsoleController;
   ConsoleService service = ConsoleService();
@@ -94,10 +102,12 @@ class _CreateConsoleState extends State<CreateConsole> with SingleTickerProvider
       children: [
         Center(
             child: TitleText(
-          text: "Console",
-        )),
+              text: "Console",
+              fontSize: 24,
+              color: Provider.of<AppThemes>(context).appBarTitleColor
+            )),
         TextField(
-          decoration: InputDecoration(labelText: "Nome"),
+          decoration: InputDecoration(labelText: "Nome",labelStyle: TextStyle(color: Provider.of<AppThemes>(context).appBarTitleColor.withAlpha(200))),
           controller: widget.consoleNameController,
           onChanged: (value) => isValid = validate(),
         ),
@@ -109,7 +119,7 @@ class _CreateConsoleState extends State<CreateConsole> with SingleTickerProvider
                 flex: 1,
                 child: Text(
                   "Icone: ",
-                  style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+                  style: TextStyle(fontSize: 16, color: Provider.of<AppThemes>(context).appBarTitleColor.withAlpha(200)),
                 ),
               ),
               InkWell(
@@ -141,12 +151,17 @@ class _CreateConsoleState extends State<CreateConsole> with SingleTickerProvider
                 child: Material(
                   elevation: 15,
                   child: Container(
-                      decoration: BoxDecoration(boxShadow: <BoxShadow>[
-                        BoxShadow(
-                            color: Color(0xfff8f8f8),
-                            blurRadius: 180,
-                            spreadRadius: 10),
-                      ]),
+                    padding: EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        
+                        color: Provider.of<AppThemes>(context).gradientStartColor,
+                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                              color: Provider.of<AppThemes>(context).cardShadow,
+                              blurRadius: 50,
+                              spreadRadius: 10),
+                        ]),
                       child: Column(
                         children: [
                           Wrap(
@@ -156,7 +171,6 @@ class _CreateConsoleState extends State<CreateConsole> with SingleTickerProvider
                                         child: GestureDetector(
                                           onTap: () {
                                             setState(() {
-                                              if (iconConsole == icon)
                                                 expandConsoleIcons = false;
 
 
@@ -187,9 +201,85 @@ class _CreateConsoleState extends State<CreateConsole> with SingleTickerProvider
                 ),
               )
             : Container(),
-        Text("*Pressione no icone para alterar",
-            textAlign: TextAlign.start,
-            style: TextStyle(fontSize: 16, color: Colors.grey[700])),
+           
+          Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          child: Row(
+            children: <Widget>[
+              Flexible(
+                flex: 1,
+                child: Text(
+                  "Jogo: ",
+                  style: TextStyle(fontSize: 16, color: Provider.of<AppThemes>(context).appBarTitleColor.withAlpha(200)),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                   ImagePicker.pickImage(source: ImageSource.gallery).then((file){
+                    if(file == null) return;
+                    setState(() {
+                      imageUrl = file.path;
+                    });
+                    if(widget.onImageChange != null){
+                      widget.onImageChange(imageUrl);
+                    }
+                  });
+                },
+                child: SvgPicture.network(
+                  "https://image.flaticon.com/icons/svg/1752/1752470.svg",
+                  placeholderBuilder: (context) => Container(
+                    child: CircularProgressIndicator(),
+                    width: 40,
+                    height: 40,
+                  ),
+                  height: 40,
+                ),
+              ),
+                imageUrl != null ?Padding(
+                  padding: const EdgeInsets.only(left:15.0),
+                  child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      imageUrl = null;
+                    });
+                  },
+                  child: SvgPicture.network(
+                    "https://image.flaticon.com/icons/svg/747/747539.svg",
+                    placeholderBuilder: (context) => Container(
+                      child: CircularProgressIndicator(),
+                      width: 30,
+                      height: 30,
+                    ),
+                    height: 30,
+                  ),
+              ),
+                ): Container(),
+            ],
+          ),
+        ),
+          imageUrl != null ?  Row(
+            children: <Widget>[
+              Container(
+                  height: 150.0,
+                  width: 150.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: FileImage(File(imageUrl))
+                    )
+                  ),
+        ),
+            ],
+          ): Container(),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 15.0),
+            child: Text("*Pressione nos icones para alterar",
+        
+              textAlign: TextAlign.start,
+              style: TextStyle(fontSize: 16, color: Provider.of<AppThemes>(context).appBarTitleColor.withAlpha(200))),
+          ),
+         
       ],
     );
   }

@@ -19,8 +19,7 @@ class CPUModel{
    this.cacheSize,
    this.flops,
   }){
-    if(this.name.toLowerCase() == this.name){
-      this.name = this.name.firstLetterToUpperCase;
-    }
+    this.name = this.name.firstLetterToUpperCase;
+    
   }
 }

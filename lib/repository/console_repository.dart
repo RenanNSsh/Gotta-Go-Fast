@@ -13,12 +13,12 @@ var _allDevelopers = [
 ];
 
 var _consoleIcons = [
-  "https://image.flaticon.com/icons/svg/447/447564.svg", 
+  "https://image.flaticon.com/icons/svg/1408/1408986.svg", 
   "https://image.flaticon.com/icons/svg/667/667916.svg",
   "https://image.flaticon.com/icons/svg/744/744718.svg",
   "https://image.flaticon.com/icons/svg/732/732260.svg",
   "https://image.flaticon.com/icons/svg/2285/2285776.svg",
-  "https://image.flaticon.com/icons/svg/732/732146.svg",
+  "https://image.flaticon.com/icons/svg/771/771210.svg",
   "https://image.flaticon.com/icons/svg/1816/1816034.svg",
   "https://image.flaticon.com/icons/svg/742/742270.svg"
 ];
@@ -171,6 +171,18 @@ class ConsoleRepository{
     return consoles;
   }
 
+  Future<List<ConsoleModel>> findLikedsWith(String text) async{
+    await Future.delayed(Duration(milliseconds: 500));
+    var sameText = (ConsoleModel console) => console.name.toLowerCase().contains(text) ||
+                                console.cpu.name.toLowerCase().contains(text) || 
+                                console.developer.name.toLowerCase().contains(text);
+    var liked = (ConsoleModel console) => console.isliked;
+    var consoles = _consoles.where(sameText)
+                            .where(liked)
+                            .toList();
+    return consoles;
+  }
+
   Future<void> save(ConsoleModel consoleModel) async{
     await Future.delayed(Duration(milliseconds: 500));
     var existingDeveloper = _allDevelopers.firstWhere((developer) => developer.name == consoleModel.developer.name || developer.iconUrl == consoleModel.developer.iconUrl,orElse: (){
@@ -191,6 +203,7 @@ class ConsoleRepository{
     await Future.delayed(Duration(milliseconds: 500));
     return _developerIcons;
   }
+
 
 
 }

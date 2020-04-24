@@ -9,4 +9,14 @@ extension StringExtension on String{
   bool get valueExists{
     return this != null && this.isNotEmpty;
   }
+
+  String get titleCap{
+    if(this != null){
+      return this.split(RegExp(r"\s"))
+                  .map((word) => word.firstLetterToUpperCase)
+                  .toList()
+                  .join(' ');
+    }
+    return null;
+  }
 }

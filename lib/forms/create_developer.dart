@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gotta_go_fast/components/title_text.dart';
 import 'package:gotta_go_fast/services/console_service.dart';
+import 'package:gotta_go_fast/themes/app_themes.dart';
+import 'package:provider/provider.dart';
 
 class CreateDeveloper extends StatefulWidget {
   
@@ -57,7 +59,7 @@ class _CreateDeveloperState extends State<CreateDeveloper> with SingleTickerProv
 
   
   getDeveloperIcons() async{
-    developerIcon = widget.icon != null ? widget.icon : "https://image.flaticon.com/icons/svg/2634/2634463.svg";
+    developerIcon = widget.icon != null ? widget.icon : "https://image.flaticon.com/icons/svg/1705/1705706.svg";
     var icons = await service.findAllDeveloperIcons();
     setState(() {
       developerIcons = icons;
@@ -95,10 +97,14 @@ class _CreateDeveloperState extends State<CreateDeveloper> with SingleTickerProv
     return Column(
           children: [
             Center(
-              child: TitleText(text: "Desenvolvedora",)
+              child: TitleText(
+                text: "Desenvolvedora",
+                fontSize: 24,
+                color: Provider.of<AppThemes>(context).appBarTitleColor
+              )
             ),  
             TextField(
-              decoration: InputDecoration(labelText: "Desenvolvedora"),
+              decoration: InputDecoration(labelText: "Desenvolvedora", labelStyle: TextStyle(color: Provider.of<AppThemes>(context).appBarTitleColor.withAlpha(200))),
               controller: widget.developerNameController,
               onChanged: (value) => isValid = validate(),
             ),
@@ -109,7 +115,7 @@ class _CreateDeveloperState extends State<CreateDeveloper> with SingleTickerProv
                 children: <Widget>[
                   
                   Flexible(
-                    child: Text( "Icone: ", style: TextStyle(fontSize: 16, color: Colors.grey[700]),),
+                    child: Text( "Icone: ", style: TextStyle(fontSize: 16, color: Provider.of<AppThemes>(context).appBarTitleColor.withAlpha(200)),),
                   ),
                   InkWell(
                     onTap: (){
@@ -138,11 +144,16 @@ class _CreateDeveloperState extends State<CreateDeveloper> with SingleTickerProv
                 
                 elevation: 15,
               
-                            child: Container(
+                child: Container(
+                    padding: EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
+                    color: Provider.of<AppThemes>(context).gradientStartColor,
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
                     boxShadow: <BoxShadow>[
-              BoxShadow(
-                  color: Color(0xfff8f8f8), blurRadius: 180, spreadRadius: 10),
+                    BoxShadow(
+                        color: Provider.of<AppThemes>(context).cardShadow,
+                        blurRadius: 50,
+                        spreadRadius: 10),
           ]
                   ),
                   child:  Column(
@@ -154,7 +165,7 @@ class _CreateDeveloperState extends State<CreateDeveloper> with SingleTickerProv
                         child: GestureDetector(
                           onTap: (){
                             setState(() {
-                              if(developerIcon == icon)  expandDevelopersIcons = false;
+                              expandDevelopersIcons = false;
 
                               developerIcon = icon;
                               widget.onIconChange(icon);
@@ -178,7 +189,7 @@ class _CreateDeveloperState extends State<CreateDeveloper> with SingleTickerProv
             )
               )
               ): Container(),
-            Text( "*Pressione nos icones para alterar",textAlign: TextAlign.start, style: TextStyle(fontSize: 16, color: Colors.grey[700])),
+            Text( "*Pressione nos icones para alterar",textAlign: TextAlign.start, style: TextStyle(fontSize: 16, color: Provider.of<AppThemes>(context).appBarTitleColor.withAlpha(200))),
        
           ],
         );

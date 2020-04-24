@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gotta_go_fast/components/title_text.dart';
 import 'package:gotta_go_fast/models/console_model.dart';
+import 'package:gotta_go_fast/themes/app_themes.dart';
+import 'package:provider/provider.dart';
 
 class ConsoleCard extends StatefulWidget {
   final ConsoleModel console;
@@ -45,11 +47,11 @@ class _ConsoleCardState extends State<ConsoleCard> {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Color(0XFFFFFFFF),
+          color: Provider.of<AppThemes>(context).cardColor,
           borderRadius: BorderRadius.all(Radius.circular(20)),
           boxShadow: <BoxShadow>[
             BoxShadow(
-                color: Color(0xfff8f8f8), blurRadius: 15, spreadRadius: 10),
+                color: Provider.of<AppThemes>(context).cardShadow, blurRadius: 15, spreadRadius: 10),
           ],
         ),
         margin: EdgeInsets.symmetric(vertical: 20),
@@ -78,6 +80,7 @@ class _ConsoleCardState extends State<ConsoleCard> {
     return TitleText(
       text: model.cpu.name,
       fontSize: 18,
+      color: Provider.of<AppThemes>(context).consoleCardTitle,
     );
   }
 
@@ -86,13 +89,14 @@ class _ConsoleCardState extends State<ConsoleCard> {
       text: model.developer.name,
       maxLines: 1,
       fontSize: 14,
-      color: Color(0xffE65829),
+      color: Provider.of<AppThemes>(context).consoleCardSubtitle,
     );
   }
 
   TitleText _buildTitle() {
     return TitleText(
       text: model.name,
+      color: Provider.of<AppThemes>(context).consoleCardTitle,
       fontSize: 16,
     );
   }

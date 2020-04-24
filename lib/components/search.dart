@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gotta_go_fast/themes/app_themes.dart';
+import 'package:provider/provider.dart';
 
 class Search extends StatefulWidget {
   final Function(String text) onChanges;
@@ -36,7 +38,7 @@ class _SearchState extends State<Search> {
                     hintStyle: TextStyle(fontSize: 14),
                     contentPadding:
                         EdgeInsets.only(left: 10, right: 10, bottom: 0, top: 5),
-                    prefixIcon: Icon(Icons.search, color: Colors.black54)),
+                    prefixIcon: Icon(Icons.search, color: Provider.of<AppThemes>(context).searchIcon)),
               ),
             ),
           ),

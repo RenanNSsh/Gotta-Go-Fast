@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gotta_go_fast/components/title_text.dart';
 import 'package:gotta_go_fast/models/developer_model.dart';
+import 'package:gotta_go_fast/themes/app_themes.dart';
+import 'package:provider/provider.dart';
 
 class DeveloperIcon extends StatelessWidget {
   // final String imagePath;
@@ -26,13 +28,13 @@ class DeveloperIcon extends StatelessWidget {
         height: 40,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: isSelected ? Color(0XFFFFFFFF) : Colors.transparent,
+          color: isSelected ? Provider.of<AppThemes>(context).developerCategorySelected : Provider.of<AppThemes>(context).developerCategoryNotSelected,
           border: Border.all(
-              color: isSelected ? Color(0xffE65829) : Color(0xffA1A3A6),
+              color: isSelected ? Provider.of<AppThemes>(context).developerCategorySelectedBorder : Provider.of<AppThemes>(context).developerCategoryNotSelectedBorder,
               width: isSelected ? 2 : 1),
           boxShadow: <BoxShadow>[
             BoxShadow(
-              color: isSelected ?  Color(0xfffbf2ef) : Colors.white,
+              color: isSelected ?  Provider.of<AppThemes>(context).developerCategorySelectedShadow : Provider.of<AppThemes>(context).developerCategoryNotSelectedShadow ,
                blurRadius: 10,
                 spreadRadius: 5,
                 offset: Offset(5,5)
