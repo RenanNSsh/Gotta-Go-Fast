@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gotta_go_fast/components/categories_developers.dart';
 import 'package:gotta_go_fast/components/console_grid.dart';
 import 'package:gotta_go_fast/components/custom_scaffold.dart';
 import 'package:gotta_go_fast/components/gradient_container.dart';
 import 'package:gotta_go_fast/components/search.dart';
+import 'package:gotta_go_fast/components/title_text.dart';
 import 'package:gotta_go_fast/models/console_model.dart';
 import 'package:gotta_go_fast/models/developer_model.dart';
 import 'package:gotta_go_fast/services/console_service.dart';
+import 'package:gotta_go_fast/themes/app_themes.dart';
+import 'package:provider/provider.dart';
 
 class CPUList extends StatefulWidget {
   final DeveloperModel initialDeveloper;
@@ -116,6 +120,33 @@ class _CPUListState extends State<CPUList> {
   Widget _consoleGridWidget() {
     return !isLoading && consoles.length != 0
         ? ConsoleGrid(consoles: consoles)
-        : Center(child: CircularProgressIndicator());
+        : !isLoading
+            ? Container(
+                child: Column(
+                  
+                children: <Widget>[
+                  SizedBox(
+                    height: 70,
+                  ),
+                  SvgPicture.network(
+                    "https://image.flaticon.com/icons/svg/872/872605.svg",
+                    color: Provider.of<AppThemes>(context).iconFavourites,
+                    placeholderBuilder: (context) =>
+                        Container(
+                      child:
+                          CircularProgressIndicator(),
+                      width: 80,
+                      height: 80,
+                    ),
+                    height: 80,
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Center(
+                      child: TitleText(text: "Não foi encontrado nenhum item",color: Provider.of<AppThemes>(context).appBarTitleColor,)),
+                ],
+              ))
+            : Container();
   }
 }
