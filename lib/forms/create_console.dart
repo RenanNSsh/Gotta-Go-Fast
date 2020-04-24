@@ -254,6 +254,20 @@ class _CreateConsoleState extends State<CreateConsole> with SingleTickerProvider
     );
   }
 
+  void _updatePicture(String image){
+    ImagePicker.pickImage(source: ImageSource.gallery).then((file){
+      if(file == null) return;
+      setState(() {
+        images[images.indexOf(image)] = file.path;
+      });
+      if(widget.onImageChange != null){
+        widget.onImageChange(images);
+      }
+      }
+    );
+    
+  }
+
   Widget _buildImageGame(String image) {
     return Padding(
       padding: const EdgeInsets.only(top:8.0),
@@ -269,6 +283,11 @@ class _CreateConsoleState extends State<CreateConsole> with SingleTickerProvider
                           image: FileImage(File(image))
                         )
                       ),
+                      child: GestureDetector(
+                        onTap: (){
+                          _updatePicture(image);
+                        },
+                      ),
                   ),
             
                   Container(
@@ -282,15 +301,7 @@ class _CreateConsoleState extends State<CreateConsole> with SingleTickerProvider
                               padding: const EdgeInsets.only(bottom:15.0),
                               child: InkWell(
                               onTap: () {
-                                ImagePicker.pickImage(source: ImageSource.gallery).then((file){
-                                  if(file == null) return;
-                                  setState(() {
-                                    images[images.indexOf(image)] = file.path;
-                                  });
-                                  if(widget.onImageChange != null){
-                                    widget.onImageChange(images);
-                                  }
-                                });
+                                _updatePicture(image);
                               },
                               child: SvgPicture.network(
                                 "https://image.flaticon.com/icons/svg/475/475626.svg",
