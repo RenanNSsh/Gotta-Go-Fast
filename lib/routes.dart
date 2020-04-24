@@ -1,5 +1,8 @@
-import 'package:gotta_go_fast/screens/cpu_list.dart';
+import 'package:flutter/material.dart';
+import 'package:gotta_go_fast/screens/favourites.dart';
 
 var routes = {
-  '/': (context) => CPUList()
+  // '/': (BuildContext context) => CPUList(),
+  // '/cpu_detail': (BuildContext context) => CPUDetailScreen(),
+  '/favourites': (BuildContext context) => Favourites()
 };

@@ -1,17 +1,25 @@
+import 'package:flutter/cupertino.dart';
+import 'package:gotta_go_fast/extensions/string_extension.dart';
+
 class CPUModel{
   String name;
   String description;
-  double frequency;
+  String clockRate;
   int coreAmout;
-  int cacheSize;
-  int flops;
+  String cacheSize;
+  String flops;
+  String infoUrl;
 
   CPUModel({
-   this.name,
+   @required this.name,
+   this.infoUrl,
    this.description,
-   this.frequency,
+   this.clockRate,
    this.coreAmout,
    this.cacheSize,
-   this.flops
-  });
+   this.flops,
+  }){
+    this.name = this.name.firstLetterToUpperCase;
+    
+  }
 }
