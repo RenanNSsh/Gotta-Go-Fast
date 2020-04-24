@@ -38,13 +38,15 @@ class _CPUDetailScreenState extends State<CPUDetailScreen> {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            _buildHeader(context),
-            _buildBottom(context),
-          ],
+    return  GradientContainer(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              _buildHeader(context),
+              _buildBottom(context),
+            ],
+          ),
         ),
       ),
     );
@@ -218,7 +220,7 @@ class _CPUDetailScreenState extends State<CPUDetailScreen> {
   }
 
   Widget _buildBottom(BuildContext context){
-    return GradientContainer(
+    return Container(
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.all(40.0),
       child: Center(
