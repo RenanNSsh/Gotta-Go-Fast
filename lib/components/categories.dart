@@ -6,7 +6,9 @@ import 'package:gotta_go_fast/services/console_service.dart';
 class CategoriesDevelopers extends StatefulWidget {
   final Function(DeveloperModel model) onTap;
   final List<DeveloperModel> developers;
-  CategoriesDevelopers({Key key,@required this.onTap, this.developers}) : super(key: key);
+  final DeveloperModel initialDeveloper;
+  CategoriesDevelopers({Key key,@required this.onTap, this.developers, this.initialDeveloper}) : super(key: key);
+
 
   @override
   _CategoriesDevelopersState createState() => _CategoriesDevelopersState(onTap);
@@ -28,27 +30,39 @@ class _CategoriesDevelopersState extends State<CategoriesDevelopers> {
         this.developers = widget.developers;
         
       });
+       if(widget.initialDeveloper != null){
+        setState(() {
+          indexSelected = developers.indexWhere((developer)=> developer.name == widget.initialDeveloper.name);
+        
+        });
+      }
     }
+   
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setState(() {
       indexSelected = 0;
     });
     if(widget.developers == null){
       _findDevelopers();
-
     }
+    
   }
   
-  _findDevelopers() async {
+  Future<void> _findDevelopers() async {
     var devs = await consoleService.findDevelopers();
     setState(() {
       developers = devs;
     });
+      if(widget.initialDeveloper != null){
+        setState(() {
+          indexSelected = developers.indexWhere((developer)=> developer.name == widget.initialDeveloper.name);
+        
+        });
+      }
   }
 
   @override

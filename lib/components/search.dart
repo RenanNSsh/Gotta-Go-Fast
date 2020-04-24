@@ -33,7 +33,7 @@ class _SearchState extends State<Search> {
                 decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: "Pesquisar...",
-                    hintStyle: TextStyle(fontSize: 12),
+                    hintStyle: TextStyle(fontSize: 14),
                     contentPadding:
                         EdgeInsets.only(left: 10, right: 10, bottom: 0, top: 5),
                     prefixIcon: Icon(Icons.search, color: Colors.black54)),

@@ -43,5 +43,18 @@ class ConsoleService{
     return _repository.findConsoleLikedByDeveloper(developer.name.toLowerCase());
   }
 
+  Future<void> save(ConsoleModel consoleModel) async{
+    await _repository.save(consoleModel);
+  }
+
+  Future<List<String>> findAllConsoleIcons() async {
+    return await _repository.findAllConsoleIcons();
+  }
+
+  
+  Future<List<String>> findAllDeveloperIcons() async {
+    return await _repository.findAllDeveloperIcons();
+  }
+
 
 }

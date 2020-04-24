@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gotta_go_fast/components/categories.dart';
 import 'package:gotta_go_fast/components/bottom_bar.dart';
 import 'package:gotta_go_fast/components/console_grid.dart';
+import 'package:gotta_go_fast/components/custom_floating_action_button.dart';
 import 'package:gotta_go_fast/components/search.dart';
 import 'package:gotta_go_fast/components/title_text.dart';
 import 'package:gotta_go_fast/models/console_model.dart';
@@ -9,19 +10,32 @@ import 'package:gotta_go_fast/models/developer_model.dart';
 import 'package:gotta_go_fast/services/console_service.dart';
 
 class CPUList extends StatefulWidget {
+  final DeveloperModel initialDeveloper;
+
+  CPUList(this.initialDeveloper);
+
   @override
-  _CPUListState createState() => _CPUListState();
+  _CPUListState createState() => _CPUListState(initialDeveloper);
 }
 
 class _CPUListState extends State<CPUList> {
+
   final ConsoleService service = ConsoleService();
+  DeveloperModel initialDeveloper;
   List<ConsoleModel> consoles = [];
   bool isLoading = true;
+
+  _CPUListState(this.initialDeveloper);
 
   @override
   void initState() {
     super.initState();
-    _findConsoles();
+    if(initialDeveloper == null){
+      _findConsoles();
+    }else{
+      findByDeveloper(initialDeveloper);
+      isLoading = false;
+    }
   }
 
   _findConsoles() async {
@@ -39,22 +53,14 @@ class _CPUListState extends State<CPUList> {
       bottomNavigationBar: BottomBar(),
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        elevation: 4.0,
-        backgroundColor: Color.fromRGBO(52, 66, 86, 1.0),
-        child: Icon(
-          Icons.home,
-          color:  Color(0xfff7f7f7),
-        ),
-        onPressed: (){
-        },
-      ),
+      floatingActionButton: CustomFloatingActionButton(),
       // backgroundColor: Color(0XFF0e0e0e),
       body: buildSafeArea(context),
     );
   }
 
   Widget buildSafeArea(BuildContext context) {
+   
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -84,7 +90,7 @@ class _CPUListState extends State<CPUList> {
                             child: Column(
                               children: <Widget>[
                                 Search(onChanges: _filterConsoles),
-                                CategoriesDevelopers(onTap: findByDeveloper),
+                                CategoriesDevelopers(onTap: findByDeveloper,initialDeveloper: initialDeveloper,),
                                 _consoleGridWidget(),
                                 SizedBox(height: 30,)
                               ],

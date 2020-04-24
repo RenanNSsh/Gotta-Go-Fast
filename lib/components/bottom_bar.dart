@@ -67,6 +67,10 @@ class BottomBar extends StatelessWidget {
       ),
       color: Theme.of(context).accentColor,
       onPressed: (){
+        Navigator.pushReplacementNamed(
+          context,
+          "/cpu_add",
+        );
       },
     );
   }
