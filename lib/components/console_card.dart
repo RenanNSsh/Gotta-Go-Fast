@@ -8,8 +8,9 @@ import 'package:provider/provider.dart';
 class ConsoleCard extends StatefulWidget {
   final ConsoleModel console;
   final VoidCallback onChangeFavourite;
+  final Function(ConsoleModel model) onDeleted;
   bool isSelected;
-  ConsoleCard({Key key, this.console,this.onChangeFavourite, this.isSelected = false})
+  ConsoleCard({Key key, this.console,this.onChangeFavourite, this.isSelected = false, this.onDeleted})
       : super(key: key);
 
   @override
@@ -70,6 +71,7 @@ class _ConsoleCardState extends State<ConsoleCard> {
                 _buildExpressiveValue(),
               ],
             ),
+            _buildRemoveIcon()
           ],
         ),
       ),
@@ -117,7 +119,26 @@ class _ConsoleCardState extends State<ConsoleCard> {
             });
             if(widget.onChangeFavourite != null){
               widget.onChangeFavourite();
+            }
+          }
+        )
+    );
+  }
 
+  
+  Widget _buildRemoveIcon() {
+    return Positioned(
+        right: 0,
+        top: 0,
+        child: IconButton(
+          icon: Icon(
+            Icons.delete_forever,
+            color: Color(0xffa8a09b),
+            size: 35,
+          ),
+          onPressed: () {
+            if(widget.onDeleted != null){
+              widget.onDeleted(model);
             }
           }
         )

@@ -199,11 +199,13 @@ class ConsoleRepository{
     return _consoleIcons;
   }
 
-    Future<List<String>> findAllDeveloperIcons() async{
+  Future<List<String>> findAllDeveloperIcons() async{
     await Future.delayed(Duration(milliseconds: 500));
     return _developerIcons;
   }
 
-
-
+  Future<void> delete(ConsoleModel console) async{
+    await Future.delayed(Duration(milliseconds: 500));
+    _consoles.removeWhere((consoleList) => consoleList.name == console.name && consoleList.cpu.name == console.cpu.name);
+  }
 }
