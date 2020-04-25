@@ -122,7 +122,10 @@ class _FavouritesState extends State<Favourites> {
 
   Widget _consoleGridWidget() {
     return !isLoading && consoles.length != 0
-        ? ConsoleGrid(consoles: consoles, onChangeFavourite: _removeFavourite)
+        ? ConsoleGrid(consoles: consoles, onChangeFavourite: _removeFavourite, onDeleted: (ConsoleModel console) {
+            service.delete(console);
+            _findConsoles();
+        })
         : !isLoading
             ? Container(
                 child: Column(
