@@ -5,7 +5,8 @@ import 'package:gotta_go_fast/models/console_model.dart';
 class ConsoleGrid extends StatelessWidget {
   final List<ConsoleModel> consoles;
   final VoidCallback onChangeFavourite;
-  ConsoleGrid({@required this.consoles, this.onChangeFavourite});
+  final Function(ConsoleModel model) onDeleted;
+  ConsoleGrid({@required this.consoles, this.onChangeFavourite, this.onDeleted});
 
   Widget build(BuildContext context) {
     return Container(
@@ -16,7 +17,9 @@ class ConsoleGrid extends StatelessWidget {
           itemCount: consoles.length,
           itemBuilder: (context, index) {
             return consoles.length!= 0 ? ConsoleCard(
-              console: consoles[index],onChangeFavourite: onChangeFavourite
+              onDeleted: onDeleted,
+              console: consoles[index],
+              onChangeFavourite: onChangeFavourite
             ) : Container();
           },
 

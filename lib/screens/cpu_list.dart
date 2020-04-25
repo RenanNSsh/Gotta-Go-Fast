@@ -34,14 +34,17 @@ class _CPUListState extends State<CPUList> {
   @override
   void initState() {
     super.initState();
-    if (initialDeveloper == null) {
+    updateConsoles();
+  }
+
+  updateConsoles(){
+     if (initialDeveloper == null) {
       _findConsoles();
     } else {
       findByDeveloper(initialDeveloper);
       isLoading = false;
     }
   }
-
 
   _findConsoles() async {
     var consoleList = await service.findAll();
@@ -119,7 +122,10 @@ class _CPUListState extends State<CPUList> {
 
   Widget _consoleGridWidget() {
     return !isLoading && consoles.length != 0
-        ? ConsoleGrid(consoles: consoles)
+        ? ConsoleGrid(consoles: consoles,onDeleted: (ConsoleModel console) {
+            service.delete(console);
+            updateConsoles();
+        },)
         : !isLoading
             ? Container(
                 child: Column(

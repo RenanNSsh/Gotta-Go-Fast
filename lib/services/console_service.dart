@@ -63,6 +63,10 @@ class ConsoleService{
     return await _repository.findAllDeveloperIcons();
   }
 
+  Future<void> delete(ConsoleModel console) async{
+    await _repository.delete(console);
+  }
+
 
 
 }

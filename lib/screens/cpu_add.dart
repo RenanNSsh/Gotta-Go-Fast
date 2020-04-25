@@ -1,5 +1,4 @@
 // flutter
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -36,8 +35,8 @@ class _CPUAddScreenState extends State<CPUAddScreen> {
 
   // First Step
   TextEditingController consoleNameController = TextEditingController();
+  List<String> imagesGamesPath = [];
   String iconConsole;
-  String imageGameUrl;
 
   // Second Step
   TextEditingController developerNameController = TextEditingController();
@@ -83,7 +82,7 @@ class _CPUAddScreenState extends State<CPUAddScreen> {
                 icon: iconConsole,
                 consoleNameController: consoleNameController,
                 onIconChange: (String icon) => iconConsole = icon,
-                onImageChange: (String imageUrl) => imageGameUrl = imageUrl,
+                onImageChange: (List<String> imagesUrls) => imagesGamesPath = imagesUrls,
                 onValidStateChange: validStateChange
               )
             ),
@@ -264,7 +263,7 @@ class _CPUAddScreenState extends State<CPUAddScreen> {
       cpu: cpuModel,
       developer: developer,
       name: consoleNameController.text,
-      gameImg: imageGameUrl,
+      imagesGamesDevice: imagesGamesPath,
       iconUrl: iconConsole,
     );
   }
