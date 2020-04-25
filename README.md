@@ -19,7 +19,5 @@ Um Projeto Flutter de Processadores de Vídeo Games!
 
 ## Versões Futuras
 
-  - Poder Remover os Processadores indesejados da listagem.
   - Poder alterar o idioma do App.
-  - Adição de várias imagens de games na criação do console.
   - ButtomAppBar Customizada e Animada.
